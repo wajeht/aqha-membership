@@ -3,7 +3,7 @@ const config = require("./config.json");
 
 (function main() {
     const myTask = new AmericanQuarterHorseAssociationMembership();
-    myTask.DEBUG = true;
+    myTask.DEBUG = true; // set this the 'false' if you don't want the verboose output
 
 
     const outputFiles = myTask.getFiles(
@@ -12,4 +12,6 @@ const config = require("./config.json");
     );
 
     myTask.copyFiles(outputFiles, config.SPDE_SHARE);
+    
+    // const copiedOutputFiles = myTask.getFiles()
 })();
