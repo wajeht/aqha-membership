@@ -1,11 +1,15 @@
-const AmericanQuarterHorseAssociationMembership = require('./src/AmericanQuarterHorseAssociationMembership.js');
-const config = require('./config.json');
+const AmericanQuarterHorseAssociationMembership = require("./src/AmericanQuarterHorseAssociationMembership.js");
+const config = require("./config.json");
 
 (function main() {
     const myTask = new AmericanQuarterHorseAssociationMembership();
-    const outputFiles = myTask.getFiles(config.FOLDER_PATH, config.FILE_EXTENSION);
-    myTask.renameFiles(outputFiles, config.TO_RENAME);
+    myTask.DEBUG = true;
 
-    // myTask.copyFiles(outputFiles, config.DESTINATION);
-    myTask.getRenamedFiles();
+
+    const outputFiles = myTask.getFiles(
+        config.OMEGASRV1_ADF_OUTPUT,
+        config.FILE_EXTENSION
+    );
+
+    myTask.copyFiles(outputFiles, config.SPDE_SHARE);
 })();

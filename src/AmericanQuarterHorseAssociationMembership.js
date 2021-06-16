@@ -1,11 +1,18 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 class AmericanQuarterHorseAssociationMembership {
     #files; //  private variable
 
     constructor() {
         this.#files = [];
+
+        // turn on varbose mode
+        this.DEBUG = true;
+        if (!this.DEBUG) {
+            console = console || {};
+            console.debug = function () {};
+        }
     }
 
     /**
@@ -16,9 +23,9 @@ class AmericanQuarterHorseAssociationMembership {
     #getFileDate(filePath) {
         const date = new Date(fs.statSync(filePath).mtime)
             .toUTCString()
-            .split(' ')
+            .split(" ")
             .slice(0, 4)
-            .join(' ');
+            .join(" ");
         return date;
     }
 
@@ -30,39 +37,58 @@ class AmericanQuarterHorseAssociationMembership {
      */
     getFiles(folderPath, fileExtension) {
         try {
+            console.debug();
+            console.debug({
+                function: "***** getFiles(folderPath, fileExtension) *****",
+            });
+            const fileArray = [];
+
             // check to see for valid path
             if (fs.statSync(folderPath).isDirectory()) {
                 const filesInsideCurrentFolder = fs.readdirSync(folderPath);
 
                 for (let currentFile of filesInsideCurrentFolder) {
-                    const currentFileAbsolutePath = path.join(folderPath, currentFile);
+                    const currentFileAbsolutePath = path.join(
+                        folderPath,
+                        currentFile
+                    );
 
-                    const currentFileExtension = currentFileAbsolutePath.split('.').pop();
-                    const currentFileDate = this.#getFileDate(currentFileAbsolutePath);
-                    const todaysDate = new Date().toUTCString().split(' ').slice(0, 4).join(' ');
+                    const currentFileExtension = currentFileAbsolutePath
+                        .split(".")
+                        .pop();
+                    const currentFileDate = this.#getFileDate(
+                        currentFileAbsolutePath
+                    );
+                    const todaysDate = new Date()
+                        .toUTCString()
+                        .split(" ")
+                        .slice(0, 4)
+                        .join(" ");
 
-                    if (currentFileExtension === fileExtension && todaysDate === currentFileDate) {
+                    if (
+                        currentFileExtension === fileExtension &&
+                        todaysDate === currentFileDate
+                    ) {
                         // console.debug({
                         //     fileFound: currentFileAbsolutePath,
-                        //     currentFileDate: currentFileDate,
+                        //     currentFileDate: currentFileDate,fileArray
                         // });
-                        this.#files.push({
+                        fileArray.push({
                             currentFile: currentFileAbsolutePath,
-                            fileDate: this.#getFileDate(currentFileAbsolutePath),
+                            fileDate: this.#getFileDate(
+                                currentFileAbsolutePath
+                            ),
                         });
                     }
                 }
-                return this.#files;
+                console.debug({ returns: fileArray });
+                return fileArray;
             }
 
-            throw new Error('bad folder path');
+            throw new Error("bad folder path");
         } catch (error) {
-            console.error(error.message);
+            console.debug(error.message);
         }
-    }
-
-    getRenamedFiles() {
-        console.log(this.#files);
     }
 
     /**
@@ -71,17 +97,34 @@ class AmericanQuarterHorseAssociationMembership {
      * @param {String} renameText
      */
     copyFiles(fileArray, destinationPath) {
+        console.debug();
+        console.debug({
+            function: "***** copyFiles(fileArray, destinationPath) *****",
+        });
         try {
             for (let file of fileArray) {
                 const currentFile = file.currentFile;
+                const fileName = currentFile.split("\\").pop();
 
-                fs.copyFile(currentFile, destinationPath, (error) => {
-                    if (error) {
-                        console.log(error);
+                // I was passing in just folde path, and it did not work
+                // I have to put path with file name on destination
+                // That's what below line do!
+                const destinationPathWithFileName = `${destinationPath}${fileName}`;
+
+                fs.copyFile(
+                    currentFile,
+                    destinationPathWithFileName,
+                    (error) => {
+                        if (error) {
+                            console.debug(error);
+                        }
+
+                        console.debug({
+                            fileCopied: fileName,
+                            to: destinationPathWithFileName,
+                        });
                     }
-
-                    console.log({ copyingCurrentFilesTo: destinationPath });
-                });
+                );
             }
         } catch (error) {
             console.log(error.message);
@@ -98,8 +141,10 @@ class AmericanQuarterHorseAssociationMembership {
         try {
             for (let file of fileArray) {
                 const currentFile = file.currentFile;
-                const currentFileWithoutFileExtension = file.currentFile.split('.').shift();
-                const fileExtension = `.${file.currentFile.split('.').pop()}`; // get extention from file path
+                const currentFileWithoutFileExtension = file.currentFile
+                    .split(".")
+                    .shift();
+                const fileExtension = `.${file.currentFile.split(".").pop()}`; // get extention from file path
                 const toRenamed = `${currentFileWithoutFileExtension}_${renameText}${fileExtension}`; // put the extension back, thus become pull path with extension
 
                 // const currentFileAbsolutePath = path.join(folderPath, currentFile);
@@ -107,7 +152,7 @@ class AmericanQuarterHorseAssociationMembership {
 
                 fs.rename(currentFile, toRenamed, (error) => {
                     if (error) {
-                        throw new Error('file renaming went wrong!');
+                        throw new Error("file renaming went wrong!");
                     }
 
                     // temp.push({
