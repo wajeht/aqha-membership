@@ -3,8 +3,7 @@ const config = require("./config.json");
 
 (function main() {
     const myTask = new AmericanQuarterHorseAssociationMembership();
-    myTask.DEBUG = true; // set this the 'false' if you don't want the verboose output
-
+    myTask.DEBUG = true;
 
     const outputFiles = myTask.getFiles(
         config.OMEGASRV1_ADF_OUTPUT,
@@ -12,6 +11,11 @@ const config = require("./config.json");
     );
 
     myTask.copyFiles(outputFiles, config.SPDE_SHARE);
-    
-    // const copiedOutputFiles = myTask.getFiles()
+
+    const filesToRename = myTask.getFiles(
+        config.SPDE_SHARE,
+        config.FILE_EXTENSION
+    );
+
+    myTask.renameFiles(filesToRename, config.TO_RENAME);
 })();
