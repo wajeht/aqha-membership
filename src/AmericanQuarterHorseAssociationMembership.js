@@ -195,12 +195,20 @@ class AmericanQuarterHorseAssociationMembership {
 
         if (fs.existsSync(destinationPathWithFileName)) {
           fs.unlinkSync(destinationPathWithFileName);
-          this.#log(JSON.stringify({ deleting: destinationPathWithFileName }));
+          this.#log(
+            JSON.stringify({
+              "deleting old files": destinationPathWithFileName,
+            })
+          );
           fs.copyFileSync(currentFile, destinationPathWithFileName);
-          this.#log(JSON.stringify({ copying: destinationPathWithFileName }));
+          this.#log(
+            JSON.stringify({ "copying new files": destinationPathWithFileName })
+          );
         } else {
           fs.copyFileSync(currentFile, destinationPathWithFileName);
-          this.#log(JSON.stringify({ copying: destinationPathWithFileName }));
+          this.#log(
+            JSON.stringify({ "copying new files": destinationPathWithFileName })
+          );
         }
 
         this.#debug({
@@ -233,17 +241,17 @@ class AmericanQuarterHorseAssociationMembership {
       //     }, ${renameText})  ########## `,
       //   });
 
-    this.#log(
-      `{#################### renameFiles(${
-        typeof fileArray === ""
-          ? fileArray
-          : fileArray[0].currentFile
-              .split("\\")
-              .slice(0, fileArray[0].currentFile.split("\\").length - 1)
-              .join("\\")
-              .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
-      }, ${renameText}) ####################}`
-    );
+      this.#log(
+        `{#################### renameFiles(${
+          typeof fileArray === ""
+            ? fileArray
+            : fileArray[0].currentFile
+                .split("\\")
+                .slice(0, fileArray[0].currentFile.split("\\").length - 1)
+                .join("\\")
+                .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
+        }, ${renameText}) ####################}`
+      );
 
       for (let file of fileArray) {
         const currentFile = file.currentFile;
@@ -257,6 +265,8 @@ class AmericanQuarterHorseAssociationMembership {
           if (error) {
             this.#log(JSON.stringify(error));
           }
+
+          this.#log(JSON.stringify({"renaming current files to" : toRenamed}));
 
           this.#debug({
             currentFile: currentFile,
