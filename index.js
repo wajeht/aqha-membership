@@ -5,23 +5,29 @@ const config = require('./config.json');
     const myTask = new AmericanQuarterHorseAssociationMembership();
     myTask.DEBUG = true; // this will turn on verboose mode
 
-    // Production
-    // const outputFiles = myTask.getFiles(config.windows.OMEGASRV1_ADF_OUTPUT, config.windows.FILE_EXTENSION);
-    // myTask.copyFiles(outputFiles, config.windows.SPDE_SHARE);
+    // Development on mac
+    // const outputFiles = myTask.getFiles(
+    //     config.development.mac.OMEGASRV1_ADF_OUTPUT,
+    //     config.development.mac.FILE_EXTENSION
+    // );
+    // myTask.copyFiles(outputFiles, config.development.mac.SPDE_SHARE);
 
-    // const filesToRename = myTask.getFiles(config.windows.SPDE_SHARE, config.windows.FILE_EXTENSION);
-    // myTask.renameFiles(filesToRename, config.windows.TO_RENAME);
+    // const filesToRename = myTask.getFiles(
+    //     config.development.mac.SPDE_SHARE,
+    //     config.development.mac.FILE_EXTENSION
+    // );
+    // myTask.renameFiles(filesToRename, config.development.mac.TO_RENAME);
 
-    // Dev
+    // Development on windows
     const outputFiles = myTask.getFiles(
-        config.development.mac.OMEGASRV1_ADF_OUTPUT,
-        config.development.mac.FILE_EXTENSION
+        config.development.windows.OMEGASRV1_ADF_OUTPUT,
+        config.development.windows.FILE_EXTENSION
     );
-    myTask.copyFiles(outputFiles, config.development.mac.SPDE_SHARE);
+    myTask.copyFiles(outputFiles, config.development.windows.SPDE_SHARE);
 
     const filesToRename = myTask.getFiles(
-        config.development.mac.SPDE_SHARE,
-        config.development.mac.FILE_EXTENSION
+        config.development.windows.SPDE_SHARE,
+        config.development.windows.FILE_EXTENSION
     );
-    myTask.renameFiles(filesToRename, config.development.mac.TO_RENAME);
+    myTask.renameFiles(filesToRename, config.development.windows.TO_RENAME);
 })();
