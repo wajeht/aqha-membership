@@ -1,8 +1,28 @@
 {
-    "OMEGASRV1_ADF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\Output\\",
-    "SPDE_SHARE": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\",
-    "SPDE_SHARE_PDF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\PDF Output\\",
-    "CARDS_READY_TO_PRINT": "C:\\Users\\jawn\\Downloads\\aqha\\Cards Ready To Print\\",
-    "FILE_EXTENSION": "txt",
-    "TO_RENAME": "_R08"
+    "production": {
+        "OMEGASRV1_ADF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\Output\\",
+        "SPDE_SHARE": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\",
+        "SPDE_SHARE_PDF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\PDF Output\\",
+        "CARDS_READY_TO_PRINT": "C:\\Users\\jawn\\Downloads\\aqha\\Cards Ready To Print\\",
+        "FILE_EXTENSION": "txt",
+        "TO_RENAME": "_R08"
+    },
+    "development": {
+        "mac": {
+            "OMEGASRV1_ADF_OUTPUT": "/Users/konyein/Downloads/aqha/Output/",
+            "SPDE_SHARE": "/Users/konyein/Downloads/aqha/SPDE-Share/",
+            "SPDE_SHARE_PDF_OUTPUT": "/Users/konyein/Downloads/aqha/SPDE-SHARE/PDF Output/",
+            "CARDS_READY_TO_PRINT": "/Users/konyein/Downloads/aqha/Cards Ready To Print/",
+            "FILE_EXTENSION": "txt",
+            "TO_RENAME": "_R08"
+        },
+        "windows": {
+            "OMEGASRV1_ADF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\Output\\",
+            "SPDE_SHARE": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\",
+            "SPDE_SHARE_PDF_OUTPUT": "C:\\Users\\jawn\\Downloads\\aqha\\SPDE-SHARE\\PDF Output\\",
+            "CARDS_READY_TO_PRINT": "C:\\Users\\jawn\\Downloads\\aqha\\Cards Ready To Print\\",
+            "FILE_EXTENSION": "txt",
+            "TO_RENAME": "_R08"
+        }
+    }
 }
