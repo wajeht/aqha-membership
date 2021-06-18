@@ -25,22 +25,22 @@ class AmericanQuarterHorseAssociationMembership {
     const { LOG_PATH } = config; // bring in log_path from config.json
     const file = `${LOG_PATH}\\log.txt`;
     const date = new Date().toUTCString();
-    const log = `${date} ${message}\n`;
+    const log = `${date} - ${message}\n`;
 
     try {
       if (fs.existsSync(file)) {
         fs.appendFile(file, log, (error) => {
           if (error) {
-            this.#log(error);
+            this.#log(JSON.stringify(error));
           }
         });
       } else {
         // make new log file it it does not exist
-        fs.writeFileSync(file, "" );
+        // fs.writeFileSync(file, "");
         fs.appendFileSync(file, log);
       }
     } catch (error) {
-      console.log(error);
+      this.#log(JSON.stringify(error));
     }
   }
 
@@ -66,10 +66,14 @@ class AmericanQuarterHorseAssociationMembership {
    */
   getFiles(folderPath, fileExtension) {
     try {
-      this.#debug();
-      this.#debug({
-        "functoin getFiles(folderPath, fileExtension)": ` ########## getFiles(${folderPath}*.${fileExtension}, ${fileExtension})  ########## `,
-      });
+      //   this.#debug();
+      //   this.#debug({
+      //     "functoin getFiles(folderPath, fileExtension)": ` ########## getFiles(${folderPath}*.${fileExtension}, ${fileExtension})  ########## `,
+      //   });
+
+      this.#log(
+        `{#################### getFiles(${folderPath}, ${fileExtension}) ####################}`
+      );
 
       const tempFileArray = [];
 
@@ -116,7 +120,7 @@ class AmericanQuarterHorseAssociationMembership {
 
       throw new Error("bad folder path");
     } catch (error) {
-      console.log(object);
+      this.#log(JSON.stringify(error));
     }
   }
 
@@ -126,9 +130,35 @@ class AmericanQuarterHorseAssociationMembership {
    * @param {String} Destination Path         // For Example:     '/Users/Download/'
    */
   copyFiles(fileArray, destinationPath) {
-    this.#debug();
-    this.#debug({
-      "functoin copyFiles(fileArray, destinationPath)": ` ########## copyFiles(${
+    // this.#debug();
+    // this.#debug({
+    //   "functoin copyFiles(fileArray, destinationPath)": ` ########## copyFiles(${
+    //     typeof fileArray === ""
+    //       ? fileArray
+    //       : fileArray[0].currentFile
+    //           .split("\\")
+    //           .slice(0, fileArray[0].currentFile.split("\\").length - 1)
+    //           .join("\\")
+    //           .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
+    //   }, ${destinationPath})  ########## `,
+    // });
+
+    // this.#log(
+    //   JSON.stringify({
+    // "functoin copyFiles(fileArray, destinationPath)": ` ########## copyFiles(${
+    //   typeof fileArray === ""
+    //     ? fileArray
+    // : fileArray[0].currentFile
+    //     .split("\\")
+    //     .slice(0, fileArray[0].currentFile.split("\\").length - 1)
+    //     .join("\\")
+    //     .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
+    //     }, ${destinationPath})  ########## `,
+    //   })
+    // );
+
+    this.#log(
+      `{#################### copyFiles(${
         typeof fileArray === ""
           ? fileArray
           : fileArray[0].currentFile
@@ -136,8 +166,8 @@ class AmericanQuarterHorseAssociationMembership {
               .slice(0, fileArray[0].currentFile.split("\\").length - 1)
               .join("\\")
               .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
-      }, ${destinationPath})  ########## `,
-    });
+      }, ${destinationPath}) ####################}`
+    );
 
     try {
       for (let file of fileArray) {
@@ -163,14 +193,23 @@ class AmericanQuarterHorseAssociationMembership {
         //   });
         // });
 
-        fs.copyFileSync(currentFile, destinationPathWithFileName);
+        if (fs.existsSync(destinationPathWithFileName)) {
+          fs.unlinkSync(destinationPathWithFileName);
+          this.#log(JSON.stringify({ deleting: destinationPathWithFileName }));
+          fs.copyFileSync(currentFile, destinationPathWithFileName);
+          this.#log(JSON.stringify({ copying: destinationPathWithFileName }));
+        } else {
+          fs.copyFileSync(currentFile, destinationPathWithFileName);
+          this.#log(JSON.stringify({ copying: destinationPathWithFileName }));
+        }
+
         this.#debug({
           fileCopied: currentFile,
           to: destinationPath,
         });
       }
     } catch (error) {
-      this.#log(error);
+      this.#log(JSON.stringify(error));
     }
   }
 
@@ -181,18 +220,30 @@ class AmericanQuarterHorseAssociationMembership {
    */
   renameFiles(fileArray, renameText) {
     try {
-      this.#debug();
-      this.#debug({
-        "function renameFiles(fileArray, renameText)": ` ########## renameFiles(${
-          typeof fileArray === ""
-            ? fileArray
-            : fileArray[0].currentFile
-                .split("\\")
-                .slice(0, fileArray[0].currentFile.split("\\").length - 1)
-                .join("\\")
-                .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
-        }, ${renameText})  ########## `,
-      });
+      //   this.#debug();
+      //   this.#debug({
+      //     "function renameFiles(fileArray, renameText)": ` ########## renameFiles(${
+      //       typeof fileArray === ""
+      //         ? fileArray
+      //         : fileArray[0].currentFile
+      //             .split("\\")
+      //             .slice(0, fileArray[0].currentFile.split("\\").length - 1)
+      //             .join("\\")
+      //             .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
+      //     }, ${renameText})  ########## `,
+      //   });
+
+    this.#log(
+      `{#################### renameFiles(${
+        typeof fileArray === ""
+          ? fileArray
+          : fileArray[0].currentFile
+              .split("\\")
+              .slice(0, fileArray[0].currentFile.split("\\").length - 1)
+              .join("\\")
+              .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
+      }, ${renameText}) ####################}`
+    );
 
       for (let file of fileArray) {
         const currentFile = file.currentFile;
@@ -204,7 +255,7 @@ class AmericanQuarterHorseAssociationMembership {
 
         fs.rename(currentFile, toRenamed, (error) => {
           if (error) {
-            this.#log(error);
+            this.#log(JSON.stringify(error));
           }
 
           this.#debug({
@@ -214,7 +265,7 @@ class AmericanQuarterHorseAssociationMembership {
         });
       }
     } catch (error) {
-      this.#log(error);
+      this.#log(JSON.stringify(error));
     }
   }
 }
