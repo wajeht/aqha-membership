@@ -96,10 +96,10 @@ class AmericanQuarterHorseAssociationMembership {
             currentFileExtension === fileExtension &&
             todaysDate === currentFileDate
           ) {
-            this.#debug({
-              fileFound: currentFileAbsolutePath,
-              currentFileDate: currentFileDate,
-            });
+            // this.#debug({
+            //   fileFound: currentFileAbsolutePath,
+            //   currentFileDate: currentFileDate,
+            // });
 
             this.#log(
               JSON.stringify({
@@ -142,20 +142,6 @@ class AmericanQuarterHorseAssociationMembership {
     //           .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
     //   }, ${destinationPath})  ########## `,
     // });
-
-    // this.#log(
-    //   JSON.stringify({
-    // "functoin copyFiles(fileArray, destinationPath)": ` ########## copyFiles(${
-    //   typeof fileArray === ""
-    //     ? fileArray
-    // : fileArray[0].currentFile
-    //     .split("\\")
-    //     .slice(0, fileArray[0].currentFile.split("\\").length - 1)
-    //     .join("\\")
-    //     .concat(`\\*.${fileArray[0].currentFile.split(".").pop()}`)
-    //     }, ${destinationPath})  ########## `,
-    //   })
-    // );
 
     this.#log(
       `{#################### copyFiles(${
@@ -211,10 +197,10 @@ class AmericanQuarterHorseAssociationMembership {
           );
         }
 
-        this.#debug({
-          fileCopied: currentFile,
-          to: destinationPath,
-        });
+        // this.#debug({
+        //   fileCopied: currentFile,
+        //   to: destinationPath,
+        // });
       }
     } catch (error) {
       this.#log(JSON.stringify(error));
@@ -266,12 +252,12 @@ class AmericanQuarterHorseAssociationMembership {
             this.#log(JSON.stringify(error));
           }
 
-          this.#log(JSON.stringify({"renaming current files to" : toRenamed}));
+          this.#log(JSON.stringify({ "renaming current files to": toRenamed }));
 
-          this.#debug({
-            currentFile: currentFile,
-            renamedTo: toRenamed,
-          });
+          //   this.#debug({
+          //     currentFile: currentFile,
+          //     renamedTo: toRenamed,
+          //   });
         });
       }
     } catch (error) {
