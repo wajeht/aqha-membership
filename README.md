@@ -81,4 +81,4 @@ Within this root folder, there is a file called 'config.json' which stores path 
 
 ## license
 
-jawn, VariVerge LLC. 2021
+jawn, MIT 2021
